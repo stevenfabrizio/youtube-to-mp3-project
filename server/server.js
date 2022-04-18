@@ -20,7 +20,8 @@ app.get('/download', (req, res) => {
     const url = req.query.url;    
     res.header("Content-Disposition", 'attachment;\  filename="Video.mp3');    
     ytdl(url, {
-        format: 'mp4'
+        format: 'mp4',
+        quality: 'highestaudio',
         // format: 'audioonly'
     }).pipe(res);
 });
