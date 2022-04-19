@@ -5,17 +5,14 @@ const readline = require('readline');
 const ytdl = require('ytdl-core');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
-const { resolve } = require('path');
 ffmpeg.setFfmpegPath(ffmpegPath);
 
 
 router.get('/', (req, res) => { 
-
-    const ConvertUrl1 = () => {
-        return new Promise((resolve, reject) => {
-
+    const ConvertUrl1 = () => { 
             let url1 = req.query.urlONE;
             if (url1 === ''){
+                ConvertUrl2()
                 return
             }
             let finalUrl1 = url1.split('=')
@@ -55,17 +52,14 @@ router.get('/', (req, res) => {
             .on('end', () => {
                 console.log(`\nNo 1 Done! - ${(Date.now() - start1) / 1000}s`);
 
-                resolve(1)
+                ConvertUrl2()
             });
-        })
     }
-
-    const ConvertUrl2 = async () => {
-        const result = await ConvertUrl1()  
-        result
+    const ConvertUrl2 = () => {
 
         let url2 = req.query.urlTWO;
         if (url2 === ''){
+            ConvertUrl3()
             return
         }
         let finalUrl2 = url2.split('=')
@@ -102,14 +96,10 @@ router.get('/', (req, res) => {
             .on('end', () => {
                 console.log(`\nNo 2 Done! - ${(Date.now() - start2) / 1000}s`);
 
-                resolve()
+                ConvertUrl3()
             });
     }
-
-
-    const ConvertUrl3 = async () => {
-        const result = await ConvertUrl2()  
-        result
+    const ConvertUrl3 = () => {
 
         let url3 = req.query.urlTHREE;
         if (url3 === ''){
@@ -150,7 +140,8 @@ router.get('/', (req, res) => {
                 console.log(`\nNo 3 Done! - ${(Date.now() - start3) / 1000}s`);
             });
     }
-    ConvertUrl3()
+
+    ConvertUrl1()
 })
 
 module.exports = router
