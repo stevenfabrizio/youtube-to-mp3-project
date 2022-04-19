@@ -4,7 +4,7 @@
   "description": "YouTube to MP3 App",
   "main": "server.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "build": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
