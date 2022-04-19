@@ -5,6 +5,7 @@ const readline = require('readline');
 const ytdl = require('ytdl-core');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
+const { resolve } = require('path');
 ffmpeg.setFfmpegPath(ffmpegPath);
 
 
@@ -46,7 +47,6 @@ router.get('/', (req, res) => {
             .save(`${__dirname}/${name1}.mp3`)
             .on('error', function(err) {
                 console.log('An error occurred: ' + err.message);
-                resolve()
             })
             .on('progress', p => {
                 readline.cursorTo(process.stderr, 0);
@@ -54,7 +54,8 @@ router.get('/', (req, res) => {
             })
             .on('end', () => {
                 console.log(`\nNo 1 Done! - ${(Date.now() - start1) / 1000}s`);
-            resolve()
+
+                resolve(1)
             });
         })
     }
@@ -101,11 +102,55 @@ router.get('/', (req, res) => {
             .on('end', () => {
                 console.log(`\nNo 2 Done! - ${(Date.now() - start2) / 1000}s`);
 
-                return
+                resolve()
             });
     }
 
-    ConvertUrl2()
+
+    const ConvertUrl3 = async () => {
+        const result = await ConvertUrl2()  
+        result
+
+        let url3 = req.query.urlTHREE;
+        if (url3 === ''){
+            return
+        }
+        let finalUrl3 = url3.split('=')
+        let finalUrl33 = finalUrl3[1].split('&')
+        console.log(url3 + ' becomes ' + finalUrl33[0])
+    
+        let name3 = req.query.filename3
+        if( req.query.filename2===''){
+            name3 = 'MP3_Number_3'
+        }
+        name3 = name3.split(" ").join("_")
+    
+        let stream3 = ytdl(finalUrl33[0], {
+            quality: 'highestaudio',
+        });
+    
+        let start3 = Date.now(); 
+
+        console.log('Starting no 3...')
+
+        readline.clearLine(process.stderr, 1); 
+        
+        ffmpeg( stream3 )
+            .noVideo()
+            // .save(`${__dirname}/${finalUrl22[0]}.mp3`)
+            .save(`${__dirname}/${name3}.mp3`)
+            .on('error', function(err) {
+                console.log('An error occurred: ' + err.message);
+            })
+            .on('progress', p => {
+                readline.cursorTo(process.stderr, 0);
+                process.stdout.write(`${p.targetSize}kb downloaded`);
+            })
+            .on('end', () => {
+                console.log(`\nNo 3 Done! - ${(Date.now() - start3) / 1000}s`);
+            });
+    }
+    ConvertUrl3()
 })
 
 module.exports = router

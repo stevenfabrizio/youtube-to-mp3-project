@@ -23,7 +23,7 @@ form{
 
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: 1fr auto auto auto auto auto 1fr;
+	grid-template-rows: 1fr auto auto auto auto auto auto auto 1fr;
 
 	align-items: center;
 	justify-content: center;
