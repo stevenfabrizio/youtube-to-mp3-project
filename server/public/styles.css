@@ -12,21 +12,18 @@
 
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: auto 1fr auto;
+	grid-template-rows: 1fr;
 	align-items: center;
 	justify-content: center;
 }
 
-header{
-	height: 10vh;
-}
-
 form{
 	width: 100%;
+	height: 90%;
 
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: 1fr auto auto auto 1fr;
+	grid-template-rows: 1fr auto auto auto auto auto 1fr;
 
 	align-items: center;
 	justify-content: center;
@@ -34,23 +31,29 @@ form{
 	background-color: blue;
 }
 form div{
-	width: 80%;
+	width: 90%;
 	display: grid;
+
+	align-self: center;
+	justify-self: center;
 
 	align-items: center;
 	justify-content: center;
-
-	background-color: rgb(186, 186, 186);
 	
 	padding: 1px;
+}
+form div:nth-child(2n){
+	padding-top: 30px;
 }
 input{
 	align-self: center;
 	text-align: center;
-	width: 70vw;
-
-	background-color: white;
+	width: 60vw;
 
 	font-size: 20px;
 	min-height: 24px;
+}
+#submit-btn{
+	max-width: 50vw;
+	width: 200px;
 }

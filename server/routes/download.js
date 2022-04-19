@@ -19,6 +19,18 @@ router.get('/', (req, res) => {
     let finalUrl22 = finalUrl2[1].split('&')
     console.log(url2 + ' becomes ' + finalUrl22[0])
 
+    let name1 = req.query.filename1
+    if (req.query.filename1===''){
+        name1 = 'MP3_Number_1'
+    }
+    name1 = name1.split(" ").join("_")
+
+    let name2 = req.query.filename2
+    if( req.query.filename2===''){
+        name2 = 'MP3_Number_2'
+    }
+    name2 = name2.split(" ").join("_")
+
 
     let stream = ytdl(finalUrl11[0], {
         quality: 'highestaudio',
@@ -29,13 +41,8 @@ router.get('/', (req, res) => {
 
     ytdl.getInfo(req.query.urlONE).then(info => {
         let tempString = info.videoDetails.title
-        tempString = tempString.replaceAll(" ", "_")
         console.log(tempString)
     })
-    // ytdl.getInfo(req.query.urlTWO).then(info => {
-    //     console.log(info.videoDetails.title)
-    //     // urlB.push(info.videoDetails.video_url)
-    // })
 
     const ConvertUrl1 = () => {
         return new Promise((resolve, reject) => {
@@ -46,7 +53,7 @@ router.get('/', (req, res) => {
             ffmpeg( stream )
             .noVideo()
             // .save(`${__dirname}/${finalUrl11[0]}.mp3`)
-            .save(`${__dirname}/${'one_now'}.mp3`)
+            .save(`${__dirname}/${name1}.mp3`)
             .on('error', function(err) {
                 console.log('An error occurred: ' + err.message);
                 resolve()
@@ -75,7 +82,7 @@ router.get('/', (req, res) => {
         ffmpeg( stream2 )
             .noVideo()
             // .save(`${__dirname}/${finalUrl22[0]}.mp3`)
-            .save(`${__dirname}/${'SecondOne'}.mp3`)
+            .save(`${__dirname}/${name2}.mp3`)
             .on('error', function(err) {
                 console.log('An error occurred: ' + err.message);
             })

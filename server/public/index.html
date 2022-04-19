@@ -13,15 +13,26 @@
 </head>
 <body>
     <div id="root">    
-        <header></header>
         <form action="http://localhost:3000/download/" method="GET">
             <div></div>
+            <div>
+                <input 
+                type="text" 
+                name="filename1" 
+                placeholder="Name your MP3" />
+            </div>
             <div>
                 <input 
                 type="text" 
                 name="urlONE" 
                 placeholder="url no 1" 
                 required/>
+            </div>
+            <div>
+                <input 
+                type="text" 
+                name="filename2" 
+                placeholder="Name your MP3" />
             </div>
             <div>
                 <input 
@@ -80,11 +91,11 @@
             <div>
                 <input 
                 type="submit" 
-                value="Download Alll" />
+                id="submit-btn"
+                value="Download All" />
             </div>
             <div></div>
         </form>
-        <h2 id="myh2">testingd</h2>
     </div>
 
     <!-- <script src="/bundle.js"></script> -->
