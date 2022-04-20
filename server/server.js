@@ -1,4 +1,3 @@
-//from mostly https://github.com/fent/node-ytdl-core/blob/master/example/convert_to_mp3.js
 const express = require('express')
 const app = express()
 const cors = require('cors')

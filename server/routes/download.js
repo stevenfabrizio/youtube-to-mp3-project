@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express.Router()
 
+const colors = require('colors')
 const readline = require('readline');
 const ytdl = require('ytdl-core');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
 ffmpeg.setFfmpegPath(ffmpegPath);
-
 
 router.get('/', (req, res) => { 
     const ConvertUrl1 = () => { 
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
             }
             let finalUrl1 = url1.split('=')
             let finalUrl11 = finalUrl1[1].split('&')
-            console.log(url1 + ' becomes ' + finalUrl11[0])
+            console.log('\n' + url1 + ' becomes ' + finalUrl11[0])
 
             let name1 = req.query.filename1
             if (req.query.filename1===''){
@@ -33,11 +33,11 @@ router.get('/', (req, res) => {
 
             ytdl.getInfo(req.query.urlONE).then(info => {
                 let tempString = info.videoDetails.title
-                console.log(tempString)
+                console.log(colors.yellow(tempString))
             })
 
-            console.log('Starting no 1...')
-
+            console.log(colors.yellow('\nStarting no 1...'))
+            readline.clearLine(process.stderr, 1);
             ffmpeg( stream )
             .noVideo()
             // .save(`${__dirname}/${finalUrl11[0]}.mp3`)
@@ -50,7 +50,8 @@ router.get('/', (req, res) => {
                 process.stdout.write(`${p.targetSize}kb downloaded`);
             })
             .on('end', () => {
-                console.log(`\nNo 1 Done! - ${(Date.now() - start1) / 1000}s`);
+                readline.moveCursor(0,0);
+                console.log(colors.green(`\n${name1}.mp3 done! - ${(Date.now() - start1) / 1000}s`));
 
                 ConvertUrl2()
             });
@@ -64,7 +65,7 @@ router.get('/', (req, res) => {
         }
         let finalUrl2 = url2.split('=')
         let finalUrl22 = finalUrl2[1].split('&')
-        console.log(url2 + ' becomes ' + finalUrl22[0])
+        console.log('\n' + url2 + ' becomes ' + finalUrl22[0])
     
         let name2 = req.query.filename2
         if( req.query.filename2===''){
@@ -75,13 +76,16 @@ router.get('/', (req, res) => {
         let stream2 = ytdl(finalUrl22[0], {
             quality: 'highestaudio',
         });
-    
+
+        ytdl.getInfo(req.query.urlTWO).then(info => {
+            let tempString = info.videoDetails.title
+            console.log(colors.yellow(tempString))
+        })
+        console.log(colors.yellow('\nStarting no 2...'))
+
         let start2 = Date.now(); 
 
-        console.log('Starting no 2...')
-
-        readline.clearLine(process.stderr, 1); 
-        
+        readline.clearLine(process.stderr, 1);
         ffmpeg( stream2 )
             .noVideo()
             // .save(`${__dirname}/${finalUrl22[0]}.mp3`)
@@ -90,11 +94,11 @@ router.get('/', (req, res) => {
                 console.log('An error occurred: ' + err.message);
             })
             .on('progress', p => {
-                readline.cursorTo(process.stderr, 0);
+                readline.cursorTo(process.stderr, 1);
                 process.stdout.write(`${p.targetSize}kb downloaded`);
             })
             .on('end', () => {
-                console.log(`\nNo 2 Done! - ${(Date.now() - start2) / 1000}s`);
+                console.log(colors.green(`\n${name2}.mp3 done! - ${(Date.now() - start2) / 1000}s`));
 
                 ConvertUrl3()
             });
@@ -107,7 +111,7 @@ router.get('/', (req, res) => {
         }
         let finalUrl3 = url3.split('=')
         let finalUrl33 = finalUrl3[1].split('&')
-        console.log(url3 + ' becomes ' + finalUrl33[0])
+        console.log('\n' + url3 + ' becomes ' + finalUrl33[0])
     
         let name3 = req.query.filename3
         if( req.query.filename2===''){
@@ -119,11 +123,13 @@ router.get('/', (req, res) => {
             quality: 'highestaudio',
         });
     
+        ytdl.getInfo(req.query.urlTHREE).then(info => {
+            let tempString = info.videoDetails.title
+            console.log(colors.yellow(tempString))
+        })
+        console.log(colors.yellow('\nStarting no 3...'))
+
         let start3 = Date.now(); 
-
-        console.log('Starting no 3...')
-
-        readline.clearLine(process.stderr, 1); 
         
         ffmpeg( stream3 )
             .noVideo()
@@ -137,7 +143,7 @@ router.get('/', (req, res) => {
                 process.stdout.write(`${p.targetSize}kb downloaded`);
             })
             .on('end', () => {
-                console.log(`\nNo 3 Done! - ${(Date.now() - start3) / 1000}s`);
+                console.log(colors.green(`\n${name3}.mp3 done! - ${(Date.now() - start3) / 1000}s`));
             });
     }
 
