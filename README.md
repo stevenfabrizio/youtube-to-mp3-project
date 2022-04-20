@@ -1,4 +1,5 @@
 # youtube-to-mp3-project
+I made this app because I am sick of converters that only do one file at a time. Here you can do five at a time and get five more while those are downloading.
 
 How to run this app:
 
