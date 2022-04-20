@@ -1,5 +1,6 @@
 *{
 	box-sizing: border-box;
+	outline: none;
 	border: 0px;
 	margin: 0px;
 }
@@ -8,24 +9,37 @@
 	max-width: 100vw;
 	min-height: 100vh;
 
-	background-color: rgb(7, 7, 7);
+	background-color: rgb(20, 20, 20);
 
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: auto 1fr;
+	grid-template-rows: auto auto 1fr;
 	align-items: center;
 	justify-content: center;
 }
+
 h1{
+	font-size: 30px;
 	margin-top: 10vh;
-	margin-bottom: 5vh;
-	grid-row: 1;
-	grid-column: 1;
+	margin-bottom: 2vh;
 
 	text-align: center;
 	text-justify: center;
 
 	color: white;
+}
+
+p{
+	color: white;
+
+	text-justify: center;
+
+	margin-right: 20vw;
+	margin-left: 20vw;
+
+	line-height: 1.5;
+
+	font-size: 18px;
 }
 form{
 	width: 100%;
@@ -38,7 +52,7 @@ form{
 	justify-content: center;
 }
 form div{
-	width: 90%;
+	width: 100%;
 	display: grid;
 
 	align-self: center;
@@ -50,19 +64,20 @@ form div{
 	padding: 1px;
 }
 form div:nth-child(2n+1){
-	padding-bottom: 30px;
+	padding-bottom: 3vh;
 }
 input{
 	align-self: center;
 	text-align: center;
 	text-justify: center;
-	width: 60vw;
+	width: 80vw;
+	max-width: 500px;
 
-	font-size: 18px;
+	font-size: 16px;
 }
 #submit-btn{
 	max-width: 50vw;
-	width: 200px;
+	width: 160px;
 
 	cursor:pointer;
 }

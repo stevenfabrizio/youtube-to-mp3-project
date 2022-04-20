@@ -13,6 +13,7 @@ const path = require("path");
 const fs = require('fs');
 
 router.get('/', (req, res) => { 
+    console.log(colors.yellow('\n\nConvert request accepted...'))
     //these variables are defined here else we get undefined error in main function
     let a = req.query.yturl1
     let b = req.query.filenameno1
@@ -23,13 +24,17 @@ router.get('/', (req, res) => {
         let url1 = urlUNI;
         if (url1 === ''){
             console.log(`\nNo URL detected in #${filenumber}, skipping...`)
+            if(filenumber==='5'){
+                console.log('All Done!\n')
+                return
+            }
             if(filenumber==='4'){RunNoFive()}
             if(filenumber==='3'){RunNoFour()}
             if(filenumber==='2'){RunNoThree()}
             if(filenumber==='1'){RunNoTwo()}
 
             return
-        }
+        } 
 
         let finalUrl1 = url1.split('=')
         let finalUrl11 = finalUrl1[1].split('&')
@@ -70,7 +75,7 @@ router.get('/', (req, res) => {
         ytdl.getInfo(urlUNI).then(info => {
             let tempString = info.videoDetails.title
             console.log(colors.yellow(`\nStarting to convert File #${filenumber}: ${tempString}`))
-        })
+        }) 
 
 
         let start1 = Date.now();
@@ -79,10 +84,10 @@ router.get('/', (req, res) => {
         .save(`./converted_files/${name1}.mp3`)
         .on('error', function(err) {
             console.log('An error occurred: ' + err.message);
-        })
+        }) 
         .on('progress', p => {
-            readline.cursorTo(process.stderr, 0);
-            process.stdout.write(`${p.targetSize}kb downloaded`);
+            // readline.cursorTo(process.stderr, 0);
+            // process.stdout.write(`${p.targetSize}kb downloaded`);
         })
         .on('end', () => {
             //renaming the file to youtube title if user did not enter one.
@@ -126,6 +131,10 @@ router.get('/', (req, res) => {
             
             console.log(colors.green(`File #${filenumber} done! - ${(Date.now() - start1) / 1000}s`));
 
+            if(filenumber==='5'){
+                console.log('All Done!')
+                return
+            }
             if(filenumber==='4'){RunNoFive()}
             if(filenumber==='3'){RunNoFour()}
             if(filenumber==='2'){RunNoThree()}

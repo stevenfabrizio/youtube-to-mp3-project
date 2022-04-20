@@ -10,17 +10,18 @@
         name='description'
         content="Steven's Youtube to MP3 Converter">
     <link rel='stylesheet' href="./styles.css"/>
-</head>
+</head> 
 <body>
     <div id="root">    
         <h1>Steven's YouTube to MP3 Converter</h1>
+        <p>1. URL must be in &ensp; <i>https://www.youtube.com/watch?v=...</i> &ensp; format.<br>2. Naming is optional. Defaults to YouTube title.</p>
         <form action="http://localhost:3000/download/" method="GET">
             <div></div>
             <div>
                 <input 
                 type="text" 
                 name="filenameno1" 
-                placeholder="Name your MP3" />
+                placeholder="Name" />
             </div>
             <div>
                 <input 
@@ -33,7 +34,7 @@
                 <input 
                 type="text" 
                 name="filenameno2" 
-                placeholder="Name your MP3" />
+                placeholder="Name" />
             </div>
             <div>
                 <input 
@@ -45,7 +46,7 @@
                 <input 
                 type="text" 
                 name="filenameno3" 
-                placeholder="Name your MP3" />
+                placeholder="Name" />
             </div>
             <div>
                 <input 
@@ -57,7 +58,7 @@
                 <input 
                 type="text" 
                 name="filenameno4" 
-                placeholder="Name your MP3" />
+                placeholder="Name" />
             </div>
             <div>
                 <input 
@@ -69,7 +70,7 @@
                 <input 
                 type="text" 
                 name="filenameno5" 
-                placeholder="Name your MP3" />
+                placeholder="Name" />
             </div>
             <div>
                 <input 
@@ -81,7 +82,7 @@
                 <input 
                 type="submit" 
                 id="submit-btn"
-                value="Download All" />
+                value="Convert All" />
             </div>
             <div></div>
         </form>
