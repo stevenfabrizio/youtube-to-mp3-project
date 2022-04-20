@@ -11,6 +11,22 @@ app.get('/', (req, res) => {
     res.sendFile('index.html', { root: './' })
 })
 
+
+// const path = require("path");
+// const fs = require('fs');
+
+// let fileName = './routes/URLSYESBABY.txt';
+// let newFileName = './routes/urls.txt';
+// fs.rename(fileName, newFileName, function(err) {
+//     if (err) {
+//         console.log(err);
+//     return;
+//     }
+// console.log("File renamed successfully");
+// });
+
+
+
 const downloadRouter = require('./routes/download')
 app.use('/download', downloadRouter)
 

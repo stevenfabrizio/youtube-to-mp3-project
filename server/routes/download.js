@@ -6,7 +6,11 @@ const readline = require('readline');
 const ytdl = require('ytdl-core');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
+// const { resolve } = require('path');
 ffmpeg.setFfmpegPath(ffmpegPath);
+
+const path = require("path");
+const fs = require('fs');
 
 router.get('/', (req, res) => { 
     const ConvertUrl1 = () => { 
@@ -28,6 +32,7 @@ router.get('/', (req, res) => {
             let stream = ytdl(finalUrl11[0], {
                 quality: 'highestaudio',
             });
+            
 
             let start1 = Date.now();
 
@@ -36,12 +41,17 @@ router.get('/', (req, res) => {
                 console.log(colors.yellow(tempString))
             })
 
+            ytdl.getInfo(req.query.urlONE).then(info => {
+                let tempString = info.videoDetails.title
+                return tempString
+            })
+
+
             console.log(colors.yellow('\nStarting no 1...'))
             readline.clearLine(process.stderr, 1);
             ffmpeg( stream )
             .noVideo()
-            // .save(`${__dirname}/${finalUrl11[0]}.mp3`)
-            .save(`${__dirname}/${name1}.mp3`)
+            .save(`./converted_files/${name1}.mp3`)
             .on('error', function(err) {
                 console.log('An error occurred: ' + err.message);
             })
@@ -50,9 +60,28 @@ router.get('/', (req, res) => {
                 process.stdout.write(`${p.targetSize}kb downloaded`);
             })
             .on('end', () => {
-                readline.moveCursor(0,0);
+                //renaming the file to youtube title if user did not enter one.
+                if(req.query.filename1 === ''){
+                    ytdl.getInfo(req.query.urlONE).then(info => {
+                        let fileName = './routes/undefined.mp3';
+                        let newFileName = `${info.videoDetails.title}.mp3`;
+
+                        newFileName = newFileName.split(" ").join("_")
+                        newFileName = newFileName.split("/").join("-")
+                        newFileName = newFileName.split("\\").join("-")
+
+                        fs.rename(fileName, `./converted_files/${newFileName}`, function(err){
+                            if (err) {
+                                console.log(err);
+                                return;
+                            }
+                        });
+                    });
+                }
+                
                 console.log(colors.green(`\n${name1}.mp3 done! - ${(Date.now() - start1) / 1000}s`));
 
+                //calling next function
                 ConvertUrl2()
             });
     }
