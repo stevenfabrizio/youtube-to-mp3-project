@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 const downloadRouter = require('./routes/download')
 app.use('/download', downloadRouter)
 
-const port = 3000
+const port = process.env.PORT || 3000 
 app.listen(port, () => {
     console.log(`We are running on port ${port}`)
 })
