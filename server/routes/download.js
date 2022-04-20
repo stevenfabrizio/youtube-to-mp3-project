@@ -23,6 +23,8 @@ router.get('/', (req, res) => {
             let finalUrl11 = finalUrl1[1].split('&')
             console.log('\n' + url1 + ' becomes ' + finalUrl11[0])
 
+
+            console.log(req.query.filename1)
             let name1 = req.query.filename1
             if (req.query.filename1===''){
                 name1 = 'MP3_Number_1'
@@ -61,9 +63,9 @@ router.get('/', (req, res) => {
             })
             .on('end', () => {
                 //renaming the file to youtube title if user did not enter one.
-                if(req.query.filename1 === ''){
+                if(name1 === 'MP3_Number_1'){
                     ytdl.getInfo(req.query.urlONE).then(info => {
-                        let fileName = './routes/undefined.mp3';
+                        let fileName = './converted_files/MP3_Number_1.mp3';
                         let newFileName = `${info.videoDetails.title}.mp3`;
 
                         newFileName = newFileName.split(" ").join("_")
@@ -79,7 +81,7 @@ router.get('/', (req, res) => {
                     });
                 }
                 
-                console.log(colors.green(`\n${name1}.mp3 done! - ${(Date.now() - start1) / 1000}s`));
+                console.log(colors.green(`\nFile #1 done! - ${(Date.now() - start1) / 1000}s`));
 
                 //calling next function
                 ConvertUrl2()
