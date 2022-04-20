@@ -6,9 +6,9 @@ const readline = require('readline');
 const ytdl = require('ytdl-core');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
-// const { resolve } = require('path');
 ffmpeg.setFfmpegPath(ffmpegPath);
 
+// const { resolve } = require('path');
 const path = require("path");
 const fs = require('fs');
 
@@ -40,33 +40,10 @@ router.get('/', (req, res) => {
         let finalUrl11 = finalUrl1[1].split('&')
         // console.log('\n' + url1 + ' becomes ' + finalUrl11[0])
 
-        let name1 = filenameUNI
+        let name1 = StripTitleOfChars(filenameUNI)
         if (filenameUNI===''){
             name1 = 'temp_name' + filenumber.toString()
         }
-        name1 = name1.split(" ").join("_")
-        name1 = name1.split("%").join("_")
-        name1 = name1.split("*").join("_")
-        name1 = name1.split("<").join("_")
-        name1 = name1.split(">").join("_")
-        name1 = name1.split("?").join("")
-        name1 = name1.split("{").join("_")
-        name1 = name1.split("}").join("_")
-        name1 = name1.split("&").join("_")
-        name1 = name1.split("#").join("no")
-        name1 = name1.split("\\").join("_")
-        name1 = name1.split("/").join("_")
-        name1 = name1.split("$").join("_")
-        name1 = name1.split("!").join("_")
-        name1 = name1.split("+").join("_")
-        name1 = name1.split("|").join("_")
-        name1 = name1.split(":").join("_")
-        name1 = name1.split("=").join("_")
-        name1 = name1.split("@").join("_")
-        name1 = name1.split("'").join("_")
-        name1 = name1.split("\"").join("_")
-        name1 = name1.split("`").join("_")
-        name1 = name1.split(".").join("_")
 
         let stream = ytdl(finalUrl11[0], {
             quality: 'highestaudio',
@@ -78,7 +55,7 @@ router.get('/', (req, res) => {
         }) 
 
 
-        let start1 = Date.now();
+        let start1 = Date.now(); 
         ffmpeg( stream )
         .noVideo()
         .save(`./converted_files/${name1}.mp3`)
@@ -86,39 +63,17 @@ router.get('/', (req, res) => {
             console.log('An error occurred: ' + err.message);
         }) 
         .on('progress', p => {
-            // readline.cursorTo(process.stderr, 0);
-            // process.stdout.write(`${p.targetSize}kb downloaded`);
+            readline.cursorTo(process.stderr, 0);
+            process.stdout.write(`${p.targetSize}kb downloaded`);
         })
         .on('end', () => {
+            // readline.close
             //renaming the file to youtube title if user did not enter one.
             if(name1 === 'temp_name' + filenumber){
                 ytdl.getInfo(urlUNI).then(info => {
                     let fileName = `./converted_files/temp_name${filenumber}.mp3`;
-                    let newFileName = info.videoDetails.title;
-
-                    newFileName = newFileName.split(" ").join("_")
-                    newFileName = newFileName.split("%").join("_")
-                    newFileName = newFileName.split("*").join("_")
-                    newFileName = newFileName.split("<").join("_")
-                    newFileName = newFileName.split(">").join("_")
-                    newFileName = newFileName.split("?").join("")
-                    newFileName = newFileName.split("{").join("_")
-                    newFileName = newFileName.split("}").join("_")
-                    newFileName = newFileName.split("&").join("_")
-                    newFileName = newFileName.split("#").join("no")
-                    newFileName = newFileName.split("\\").join("_")
-                    newFileName = newFileName.split("/").join("_")
-                    newFileName = newFileName.split("$").join("_")
-                    newFileName = newFileName.split("!").join("_")
-                    newFileName = newFileName.split("+").join("_")
-                    newFileName = newFileName.split("|").join("_")
-                    newFileName = newFileName.split(":").join("_")
-                    newFileName = newFileName.split("=").join("_")
-                    newFileName = newFileName.split("@").join("_")
-                    newFileName = newFileName.split("'").join("_")
-                    newFileName = newFileName.split('\"').join("_")
-                    newFileName = newFileName.split("`").join("_")
-                    newFileName = newFileName.split(".").join("_")
+                    
+                    let newFileName = StripTitleOfChars(info.videoDetails.title)
 
                     fs.rename(fileName, `./converted_files/${newFileName}.mp3`, function(err){
                         if (err) {
@@ -141,8 +96,39 @@ router.get('/', (req, res) => {
             if(filenumber==='1'){RunNoTwo()}
         });
 
+    }
+
+    //this could get called twice. gets bad filename chars out of title.
+    const StripTitleOfChars = (name1) => {
+        let name11 = name1
+        name11 = name11.split(" ").join("_")
+        name11 = name11.split("%").join("_")
+        name11 = name11.split("*").join("_")
+        name11 = name11.split("<").join("_")
+        name11 = name11.split(">").join("_")
+        name11 = name11.split("?").join("")
+        name11 = name11.split("{").join("_")
+        name11 = name11.split("}").join("_")
+        name11 = name11.split("&").join("_")
+        name11 = name11.split("#").join("no")
+        name11 = name11.split("\\").join("_")
+        name11 = name11.split("/").join("_")
+        name11 = name11.split("$").join("_")
+        name11 = name11.split("!").join("_")
+        name11 = name11.split("+").join("_")
+        name11 = name11.split("|").join("_")
+        name11 = name11.split(":").join("_")
+        name11 = name11.split("=").join("_")
+        name11 = name11.split("@").join("_")
+        name11 = name11.split("'").join("_")
+        name11 = name11.split("\"").join("_")
+        name11 = name11.split("`").join("_")
+        name11 = name11.split(".").join("_")
+
+        return name11
     }        
 
+    //run function #1 first, then call the next at the end of each one.
     const RunNoTwo = () => {
         ConvertUrl(req.query.yturl2, req.query.filenameno2, '2')
     }
