@@ -1,93 +1,91 @@
 const express = require('express')
 const router = express.Router()
 
+const fs = require('fs');
 const colors = require('colors')
-const readline = require('readline');
-
 const ytdl = require('ytdl-core');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
-ffmpeg.setFfmpegPath(ffmpegPath);
-
 // const path = require("path");
-const fs = require('fs');
+// const readline = require('readline');
+
+ffmpeg.setFfmpegPath(ffmpegPath);
 
 router.get('/', (req, res) => { 
     console.log(colors.yellow('\n\nConvert request accepted...'))
 
-    //these variables are defined here else we get undefined error in ConvertUrl function
-    let a = req.query.yturl1
-    let b = req.query.filenameno1
-    let c = '1'
+    //these variables are defined here else get undefined error in ConvertUrl(). start with vid #1.
+    const a = req.query.yturl1
+    const b = req.query.filenameno1
+    const c = '1'
 
     const ConvertUrl = (urlUNI, filenameUNI, whichfile) => {
-        //getting sent entered URL and which number it is 
-        let filenumber = whichfile
-        let url1 = urlUNI;
+        //getting the data from form action get method
+        const rawUrl = urlUNI;
+        const userEnteredTitle = filenameUNI
+        const fileNumber = whichfile
 
-        //if there is no URL entered, skip to try the next one.
-        if (url1 === ''){
-            console.log(`\nNo URL detected in #${filenumber}, skipping...`)
-            if(filenumber==='5'){
-                console.log('All Done!\n')
+        //if there is no URL entered, skip to try the next one. we are done after #5.
+        if (rawUrl === ''){
+            console.log(`\nNo URL detected in #${fileNumber}, skipping...`)
+            if(fileNumber==='5'){
+                console.log('All Converions Complete!\n')
                 return
             }
-            if(filenumber==='4'){RunNoFive()}
-            if(filenumber==='3'){RunNoFour()}
-            if(filenumber==='2'){RunNoThree()}
-            if(filenumber==='1'){RunNoTwo()}
+            if(fileNumber==='4'){RunNoFive()}
+            if(fileNumber==='3'){RunNoFour()}
+            if(fileNumber==='2'){RunNoThree()}
+            if(fileNumber==='1'){RunNoTwo()}
 
             return
         } 
 
-        //splitting at the first = and the following &. 
-        //this is the video ID.
-        let finalUrl1 = url1.split('=')
-        let finalUrl11 = finalUrl1[1].split('&')
+        //getting video ID by splitting at the first = and the following &.
+        const userUrlNoEqual = rawUrl.split('=')
+        const urlID = userUrlNoEqual[1].split('&')
 
-        //getting the video ID from the url
-        let name1 = StripTitleOfChars(filenameUNI)
+        //getting rid of bad chars in video title to safely save the file later.
+        let temporaryFileName = StripTitleOfChars(userEnteredTitle)
 
-        //if user did not enter a name, use temp_name#
-        if (filenameUNI===''){
-            name1 = 'temp_name' + filenumber.toString()
+        //if user did not enter a name, name the file 'temp_name#'
+        if (userEnteredTitle===''){
+            temporaryFileName = 'temp_name' + fileNumber
         }
 
         //lets get the highest quality audio from the URL
-        let stream = ytdl(finalUrl11[0], {
+        const stream = ytdl(urlID[0], {
             quality: 'highestaudio',
         });
 
-        //telling terminal what the title of the detected video is
-        ytdl.getInfo(urlUNI).then(info => {
-            let tempString = info.videoDetails.title
-            console.log(colors.yellow(`\nStarting to convert File #${filenumber}: ${tempString}`))
+        //terminal telling us what the title of our detected video is
+        ytdl.getInfo(rawUrl).then(info => {
+            const videoTitle = info.videoDetails.title
+            console.log(colors.yellow(`\nStarting to convert File #${fileNumber}: ${videoTitle}`))
         }) 
 
         //starting date so can show user how long conversion took at the end
-        let start1 = Date.now(); 
+        const currentDate = Date.now(); 
 
-        //finally we get to ffmpeg. this will give us the MP3
+        //finally we get to ffmpeg magic. this will give us the MP3
         ffmpeg( stream )
         .noVideo()
-        .save(`./converted_files/${name1}.mp3`)
+        .save(`./converted_files/${temporaryFileName}.mp3`)
         .on('error', (err) => {
             console.log('An error occurred: ' + err.message);
         }) 
-        .on('progress', p => {  
-            //for some reason this will only work on URL#1. i need to study piping and streams.
-            readline.cursorTo(process.stderr, 0);
-            process.stdout.write(`${p.targetSize}kb downloaded`);
-        })
+        // .on('progress', p => {  
+        //     for some reason this will only work on URL#1. i need to study piping and streams.
+        //     readline.cursorTo(process.stderr, 0);
+        //     process.stdout.write(`${p.targetSize}kb downloaded`);
+        // })
         .on('end', () => {
-            //renaming the file to youtube title if user did not enter one.
-            if(name1 === 'temp_name' + filenumber){
-                ytdl.getInfo(urlUNI).then(info => {
-                    let fileName = `./converted_files/temp_name${filenumber}.mp3`;
-                    
-                    let newFileName = StripTitleOfChars(info.videoDetails.title)
+            //renaming the file to youtube's title if user did not enter one.
+            if(temporaryFileName === 'temp_name' + fileNumber){
+                ytdl.getInfo(rawUrl).then(info => {
+                    const oldFileName = `./converted_files/temp_name${fileNumber}.mp3`;
+                    const newFileName = StripTitleOfChars(info.videoDetails.title)
 
-                    fs.rename(fileName, `./converted_files/${newFileName}.mp3`, function(err){
+                    fs.rename(oldFileName, `./converted_files/${newFileName}.mp3`, (err) => {
                         if (err) {
                             console.log(err);
                             return;
@@ -96,25 +94,24 @@ router.get('/', (req, res) => {
                 });
             }
             
-            console.log(colors.green(`File #${filenumber} done! - ${(Date.now() - start1) / 1000}s`));
+            console.log(colors.green(`File #${fileNumber} done! - It took ${(Date.now() - currentDate) / 1000} seconds.`));
 
-            if(filenumber==='5'){
-                console.log('All Done!')
+            //calling the next video to be converted, if it is not #5.
+            if(fileNumber==='5'){
+                console.log('All Conversions Complete!')
                 return
             }
-
-            //calling the next URL to be checked
-            if(filenumber==='4'){RunNoFive()}
-            if(filenumber==='3'){RunNoFour()}
-            if(filenumber==='2'){RunNoThree()}
-            if(filenumber==='1'){RunNoTwo()}
+            if(fileNumber==='4'){RunNoFive()}
+            if(fileNumber==='3'){RunNoFour()}
+            if(fileNumber==='2'){RunNoThree()}
+            if(fileNumber==='1'){RunNoTwo()}
         });
 
     }
 
-    //this could get called twice. gets bad filename chars out of title.
-    const StripTitleOfChars = (name1) => {
-        let strippedName = name1
+    //truncates bad chars for saving to system and general cleanliness
+    const StripTitleOfChars = (temporaryFileName) => {
+        let strippedName = temporaryFileName
         strippedName = strippedName.split(" ").join("_")
         strippedName = strippedName.split("%").join("_")
         strippedName = strippedName.split("*").join("_")

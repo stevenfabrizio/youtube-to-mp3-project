@@ -11,8 +11,6 @@ How to run this app:
 6. Copy and paste youtube links into the app
 7. Check server/converted_files folder for mp3s!
 
-note: Ignore frontend folder for now.
+![HTML Page](https://cdn.discordapp.com/attachments/840740146176851979/966253883615748136/unknown.png)
 
-![](https://cdn.discordapp.com/attachments/840740146176851979/966253883615748136/unknown.png "HTML Page")
-
-![](https://cdn.discordapp.com/attachments/840740146176851979/966255497936244776/unknown.png "Terminal")
+![Terminal](https://cdn.discordapp.com/attachments/840740146176851979/966255497936244776/unknown.png)
