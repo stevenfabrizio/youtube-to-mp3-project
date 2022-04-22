@@ -13,9 +13,9 @@
 </head> 
 <body>
     <div id="root">    
-        <h1>Steven's MP3 Converter</h1>
+        <h1>MP3 Converter</h1>
 
-        <p>URL must be in one of these two formats:<br>&ensp; &ensp; &ensp; <i>https://www.youtube.com/watch?v=...</i><br>&ensp; &ensp; &ensp; <i>https://youtu.be/...</i></p>
+        <p>URL must be&ensp;<i>https://www.youtube.com/watch?v=...</i>&ensp;or&ensp;<i>https://youtu.be/...</i></p>
         
         <form action="/download/" method="GET">
             <div></div>
@@ -23,7 +23,7 @@
                 <input 
                 type="text" 
                 name="filenameno1" 
-                placeholder="Name"
+                placeholder="File Name"
                 id='filename1'
                 onchange="localStorage.setItem('filename1', value)"/>
             </div>
@@ -31,7 +31,7 @@
                 <input 
                 type="text" 
                 name="yturl1" 
-                placeholder="URL #1" 
+                placeholder="URL #1 (required)" 
                 id="url1"
                 onchange="localStorage.setItem('url1', value)"
                 required/>
@@ -40,7 +40,7 @@
                 <input 
                 type="text" 
                 name="filenameno2" 
-                placeholder="Name"
+                placeholder="File Name"
                 id='filename2'
                 onchange="localStorage.setItem('filename2', value)" />
             </div>
@@ -56,7 +56,7 @@
                 <input 
                 type="text" 
                 name="filenameno3" 
-                placeholder="Name"
+                placeholder="File Name"
                 id='filename3' 
                 onchange="localStorage.setItem('filename3', value)"/>
             </div>
@@ -72,7 +72,7 @@
                 <input 
                 type="text" 
                 name="filenameno4" 
-                placeholder="Name"
+                placeholder="File Name"
                 id='filename4'
                 onchange="localStorage.setItem('filename4', value)" />
             </div>
@@ -88,7 +88,7 @@
                 <input 
                 type="text" 
                 name="filenameno5" 
-                placeholder="Name"
+                placeholder="File Name"
                 id='filename5' 
                 onchange="localStorage.setItem('filename5', value)"/>
             </div>
@@ -105,7 +105,8 @@
                 <input 
                 type="submit" 
                 class="submit-btn"
-                value="Convert"/>
+                value="Convert"
+                id='convert-btn'/>
                 <input 
                 class="submit-btn"
                 value="Clear Inputs"

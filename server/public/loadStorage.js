@@ -17,3 +17,12 @@ clearbtn.addEventListener('click', function(){
         document.getElementById(`${storageArray[i]}`).value = ''
     }
 })
+
+//clicked convert button. if url1 empty, do nothing.
+const convertbtn = document.getElementById('convert-btn')
+convertbtn.addEventListener('click', function(){
+    if(document.getElementById('url1').value !== ''){
+        convertbtn.classList.add('clicked')
+        convertbtn.value = '...'
+    }
+})

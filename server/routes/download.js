@@ -17,14 +17,14 @@ router.get('/', (req, res) => {
     const b = req.query.filenameno1
     const c = '1'
 
-    const ConvertUrl = (urlUNI, filenameUNI, whichfile) => {
+    const ConvertUrl = (passedURL, passedFileName, passedFileNumber) => {
         //getting the data from form action get method
-        const rawUrl = urlUNI;
-        const userEnteredTitle = filenameUNI
-        const fileNumber = whichfile
+        const rawURL = passedURL;
+        const userEnteredTitle = passedFileName
+        const fileNumber = passedFileNumber
 
         //if there is no URL entered, skip to try the next one. we are done after #5.
-        if (rawUrl === ''){
+        if (rawURL === ''){
             console.log(`\nNo URL detected in #${fileNumber}, skipping...`)
             if(fileNumber==='5'){
                 console.log('All Converions Complete!\n')
@@ -49,12 +49,12 @@ router.get('/', (req, res) => {
         }
 
         //lets get the highest quality audio from the URL
-        const stream = ytdl(rawUrl, {
+        const stream = ytdl(rawURL, {
             quality: 'highestaudio',
         });
 
         //terminal telling us what the title of our detected video is
-        ytdl.getInfo(rawUrl).then(info => {
+        ytdl.getInfo(rawURL).then(info => {
             const videoTitle = info.videoDetails.title
             console.log(colors.yellow(`\nStarting to convert File #${fileNumber}: ${videoTitle}`))
         }) 
@@ -68,6 +68,7 @@ router.get('/', (req, res) => {
         .save(`./converted_files/${temporaryFileName}.mp3`)
         .on('error', (err) => {
             console.log('An error occurred: ' + err.message);
+            res.redirect('back');  
         }) 
         // .on('progress', p => {  
         //     for some reason this will only work on URL#1. i need to study piping and streams.
@@ -77,13 +78,15 @@ router.get('/', (req, res) => {
         .on('end', () => {
             //renaming the file to youtube's title if user did not enter one.
             if(temporaryFileName === 'temp_name' + fileNumber){
-                ytdl.getInfo(rawUrl).then(info => {
+                ytdl.getInfo(rawURL).then(info => {
                     const oldFileName = `./converted_files/temp_name${fileNumber}.mp3`;
                     const newFileName = StripTitleOfChars(info.videoDetails.title)
 
                     fs.rename(oldFileName, `./converted_files/${newFileName}.mp3`, (err) => {
                         if (err) {
                             console.log(err);
+
+                            res.redirect('back');
                             return;
                         }
                     });
