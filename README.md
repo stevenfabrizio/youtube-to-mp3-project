@@ -7,13 +7,13 @@ How to run this app:
 2. cd server
 3. npm install
 4. npm run nodemon
-5. Go to http://localhost:9000/
+5. Go to http://localhost:3000/
 6. Copy and paste youtube links into the app
-7. Check server/converted_files folder for MP3s!
+7. Check server/converted_files folder for MP3s
 
-![HTML Page](https://cdn.discordapp.com/attachments/840740146176851979/966253883615748136/unknown.png)
+![HTML Page](https://cdn.discordapp.com/attachments/840740146176851979/967203450318377080/unknown.png)
 
-![Terminal](https://cdn.discordapp.com/attachments/840740146176851979/966255497936244776/unknown.png)
+![Terminal](https://cdn.discordapp.com/attachments/840740146176851979/967204344606916608/unknown.png)
 
-background image is from figma:
+background image is from figma but i edited it a bit:
 https://www.figma.com/community/file/1042176651593835021

@@ -18,7 +18,7 @@ clearbtn.addEventListener('click', function(){
     }
 })
 
-//clicked convert button. if url1 empty, do nothing.
+//clicked convert button. if url1 value nonempty, add loading animation to button.
 const convertbtn = document.getElementById('convert-btn')
 convertbtn.addEventListener('click', function(){
     if(document.getElementById('url1').value !== ''){
