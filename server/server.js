@@ -1,16 +1,13 @@
 const express = require('express')
 const app = express()
-const cors = require('cors')
+
+const dotenv = require('dotenv')
+dotenv.config() 
 
 const path = require('path'); 
-
-// app.use(express.static(path.join(__dirname, '../server.public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors())
-
 app.get('/', (req, res) => {
-    // res.sendFile('./public/index.html', { root: './' }) 
     res.sendFile('index.html', { root: './' })
 })
 
@@ -19,5 +16,5 @@ app.use('/download', downloadRouter)
 
 const port = process.env.PORT || 3000 
 app.listen(port, () => {
-    console.log(`We are running on port ${port}`)
-})
+    console.log(`We are running at http://localhost:${port}`)
+})  

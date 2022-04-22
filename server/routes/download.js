@@ -6,12 +6,10 @@ const colors = require('colors')
 const ytdl = require('ytdl-core');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
-// const path = require("path");
-// const readline = require('readline');
 
 ffmpeg.setFfmpegPath(ffmpegPath);
 
-router.get('/', (req, res) => { 
+router.get('/', (req, res) => {
     console.log(colors.yellow('\n\nConvert request accepted...'))
 
     //these variables are defined here else get undefined error in ConvertUrl(). start with vid #1.
@@ -30,6 +28,8 @@ router.get('/', (req, res) => {
             console.log(`\nNo URL detected in #${fileNumber}, skipping...`)
             if(fileNumber==='5'){
                 console.log('All Converions Complete!\n')
+
+                res.redirect('back');
                 return
             }
             if(fileNumber==='4'){RunNoFive()}
@@ -40,10 +40,6 @@ router.get('/', (req, res) => {
             return
         } 
 
-        //getting video ID by splitting at the first = and the following &.
-        const userUrlNoEqual = rawUrl.split('=')
-        const urlID = userUrlNoEqual[1].split('&')
-
         //getting rid of bad chars in video title to safely save the file later.
         let temporaryFileName = StripTitleOfChars(userEnteredTitle)
 
@@ -53,7 +49,7 @@ router.get('/', (req, res) => {
         }
 
         //lets get the highest quality audio from the URL
-        const stream = ytdl(urlID[0], {
+        const stream = ytdl(rawUrl, {
             quality: 'highestaudio',
         });
 
@@ -99,6 +95,8 @@ router.get('/', (req, res) => {
             //calling the next video to be converted, if it is not #5.
             if(fileNumber==='5'){
                 console.log('All Conversions Complete!')
+
+                res.redirect('back')
                 return
             }
             if(fileNumber==='4'){RunNoFive()}
