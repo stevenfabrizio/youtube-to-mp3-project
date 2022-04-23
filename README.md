@@ -13,7 +13,7 @@ How to run this app:
 
 ![HTML Page](https://cdn.discordapp.com/attachments/840740146176851979/967203450318377080/unknown.png)
 
-![Terminal](https://cdn.discordapp.com/attachments/840740146176851979/967204344606916608/unknown.png)
+![Terminal](https://cdn.discordapp.com/attachments/840740146176851979/967229392868753448/unknown.png)
 
 background image is from figma but i edited it a bit:
 https://www.figma.com/community/file/1042176651593835021

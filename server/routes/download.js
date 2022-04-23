@@ -12,7 +12,7 @@ ffmpeg.setFfmpegPath(ffmpegPath);
 router.get('/', (req, res) => {
     console.log(colors.yellow('\n\nConvert request accepted...'))
 
-    //these variables are defined here else get undefined error in ConvertUrl(). start with vid #1.
+    //these variables are defined here else get undefined error in ConvertUrl(). start with vid #1 variables.
     const a = req.query.yturl1
     const b = req.query.filenameno1
     const c = '1'
