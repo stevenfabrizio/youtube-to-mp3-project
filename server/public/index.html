@@ -1,123 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>MP3 Converter</title>
-    <Meta 
-        name='description'
-        content="Steven's Youtube to MP3 Converter">
-    <link rel='stylesheet' href="./styles.css"/>
-</head> 
-<body>
-    <div id="root">    
-        <h1>MP3 Converter</h1>
+    <meta name="description" content="Steven's Youtube to MP3 Converter" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
 
-        <p>URL must be&ensp;<i>https://www.youtube.com/watch?v=...</i>&ensp;or&ensp;<i>https://youtu.be/...</i></p>
-        
+  <body>
+    <div id="root">
+      <h1>MP3 Converter</h1>
+
+      <p>
+        URL must be &ensp;
+        <i>https://www.youtube.com/watch?v=...</i>
+        &ensp;or&ensp;
+        <i>https://youtu.be/...</i>
+      </p>
+
+      <div></div>
+      <form action="/download/" method="GET">
         <div></div>
-        <form action="/download/" method="GET">
-            <div></div>
-            <div>
-                <input 
-                type="text" 
-                name="filenameno1" 
-                placeholder="File Name"
-                id='filename1'
-                onchange="localStorage.setItem('filename1', value)"/>
-            </div>
-            <div>
-                <input 
-                type="text" 
-                name="yturl1" 
-                placeholder="URL #1 (required)" 
-                id="url1"
-                onchange="localStorage.setItem('url1', value)"
-                required/>
-            </div>
-            <div>
-                <input 
-                type="text" 
-                name="filenameno2" 
-                placeholder="File Name"
-                id='filename2'
-                onchange="localStorage.setItem('filename2', value)" />
-            </div>
-            <div>
-                <input 
-                type="text" 
-                name="yturl2" 
-                placeholder="URL #2"
-                id="url2"
-                onchange="localStorage.setItem('url2', value)"/>
-            </div>
-            <div>
-                <input 
-                type="text" 
-                name="filenameno3" 
-                placeholder="File Name"
-                id='filename3' 
-                onchange="localStorage.setItem('filename3', value)"/>
-            </div>
-            <div>
-                <input 
-                type="text" 
-                name="yturl3" 
-                placeholder="URL #3"
-                id="url3"
-                onchange="localStorage.setItem('url3', value)"/>
-            </div>
-            <div>
-                <input 
-                type="text" 
-                name="filenameno4" 
-                placeholder="File Name"
-                id='filename4'
-                onchange="localStorage.setItem('filename4', value)" />
-            </div>
-            <div>
-                <input 
-                type="text" 
-                name="yturl4" 
-                placeholder="URL #4"
-                id="url4"
-                onchange="localStorage.setItem('url4', value)"/>
-            </div>
-            <div>
-                <input 
-                type="text" 
-                name="filenameno5" 
-                placeholder="File Name"
-                id='filename5' 
-                onchange="localStorage.setItem('filename5', value)"/>
-            </div>
-            <div>
-                <input 
-                type="text" 
-                name="yturl5" 
-                placeholder="URL #5"
-                id="url5"
-                onchange="localStorage.setItem('url5', value)"/>
-            </div>
-            <div id="btn-container">
-                <div></div>
-                <input 
-                type="submit" 
-                class="submit-btn"
-                value="Convert"
-                id='convert-btn'/>
-                <input 
-                class="submit-btn"
-                value="Clear Inputs"
-                id='clear-btn'/>
-            </div>
-            <div></div>
-        </form>
+        <div>
+          <input
+            type="text"
+            name="filenameno1"
+            placeholder="File Name"
+            id="filename1"
+            onchange="localStorage.setItem('filename1', value)"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="yturl1"
+            placeholder="URL #1 (required)"
+            id="url1"
+            onchange="localStorage.setItem('url1', value)"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="filenameno2"
+            placeholder="File Name"
+            id="filename2"
+            onchange="localStorage.setItem('filename2', value)"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="yturl2"
+            placeholder="URL #2"
+            id="url2"
+            onchange="localStorage.setItem('url2', value)"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="filenameno3"
+            placeholder="File Name"
+            id="filename3"
+            onchange="localStorage.setItem('filename3', value)"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="yturl3"
+            placeholder="URL #3"
+            id="url3"
+            onchange="localStorage.setItem('url3', value)"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="filenameno4"
+            placeholder="File Name"
+            id="filename4"
+            onchange="localStorage.setItem('filename4', value)"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="yturl4"
+            placeholder="URL #4"
+            id="url4"
+            onchange="localStorage.setItem('url4', value)"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="filenameno5"
+            placeholder="File Name"
+            id="filename5"
+            onchange="localStorage.setItem('filename5', value)"
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="yturl5"
+            placeholder="URL #5"
+            id="url5"
+            onchange="localStorage.setItem('url5', value)"
+          />
+        </div>
+        <div id="btn-container">
+          <div></div>
+          <input
+            type="submit"
+            class="submit-btn"
+            value="Convert"
+            id="convert-btn"
+          />
+          <input class="submit-btn" value="Clear Inputs" id="clear-btn" />
+        </div>
         <div></div>
+      </form>
+      <div></div>
     </div>
 
     <script src="./loadStorage.js" defer></script>
-</body>
+  </body>
 </html>

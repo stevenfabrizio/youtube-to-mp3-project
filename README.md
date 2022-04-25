@@ -1,4 +1,5 @@
 # youtube-to-mp3-project
+
 I made this app because I am sick of converters that only do one file at a time. Here you can do five at a time and search five more while those are downloading.
 
 How to run this app:
@@ -7,7 +8,7 @@ How to run this app:
 2. cd server
 3. npm install
 4. npm run nodemon
-5. Go to http://localhost:3000/
+5. Go to http://localhost:8080/
 6. Copy and paste youtube links into the app
 7. Check server/converted_files folder for MP3s
 
