@@ -8,7 +8,7 @@ How to run this app:
 2. cd server
 3. npm install
 4. npm run nodemon
-5. Go to http://localhost:8080/
+5. Go to http://localhost:8000/
 6. Copy and paste youtube links into the app
 7. Check server/converted_files folder for MP3s
 

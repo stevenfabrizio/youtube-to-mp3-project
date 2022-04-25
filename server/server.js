@@ -11,8 +11,8 @@ app.get('/', (req, res) => {
 const downloadRouter = require('./routes/download');
 app.use('/download', downloadRouter);
 
-// const port = process.env.PORT || 8080
-const port = 8080;
+// const port = process.env.PORT || 8000
+const port = 8000;
 app.listen(port, () => {
   console.log(`We are running at http://localhost:${port}`);
 });
