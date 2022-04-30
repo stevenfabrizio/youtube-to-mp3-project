@@ -9,9 +9,18 @@ I made this app because I am sick of converters that only do one file at a time.
 How to run this app:
 
 1. Clone https://github.com/stevenfabrizio/youtube-to-mp3-project, install node, install ffmpeg (with PATHs being added if necessary)
-2. cd into server
-3. npm install
-4. npm run nodemon
+2. 
+```JavaScript
+cd server
+```
+3. 
+```JavaScript
+npm install
+```
+4. 
+```JavaScript
+npm run nodemon
+```
 5. Go to http://localhost:8000/
 6. Copy and paste youtube links into the app
 7. Add a name to your file if you like. Defaults to YT title if not entered
