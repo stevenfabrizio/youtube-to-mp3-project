@@ -14,7 +14,7 @@ How to run this app:
 4. ``` npm run nodemon ```
 5. Open http://localhost:8000/
 6. Copy and paste YouTube links into the app
-7. Add a name to your file if you like. Defaults to YT title if not entered
+7. Add a name to your file if you like. Defaults to the YouTube title if not entered
 8. Check ``` server/converted_files ``` folder for MP3s
 
 
