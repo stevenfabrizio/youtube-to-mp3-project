@@ -11,3 +11,8 @@ const port = 8000;
 app.listen(port, () => {
   console.log(`We are running at http://localhost:${port}`);
 });
+
+
+//might as well open it browser on load
+const open = require('open')
+open('http://localhost:8000/') 

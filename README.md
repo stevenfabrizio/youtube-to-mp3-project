@@ -10,7 +10,7 @@ I made this app because I am sick of using YouTube MP3 converters that can only 
 2. ``` cd server ``` (once inside the cloned directory)
 3. ``` npm install ```
 4. ``` npm run nodemon ```
-5. Open http://localhost:8000/
+5. Open http://localhost:8000/ if it doesn't automatically open.
 6. Copy and paste YouTube links into the app
 7. Add a name to your file if you like. Defaults to the YouTube title if not entered
 8. Check ``` server/converted_files ``` folder for MP3s
